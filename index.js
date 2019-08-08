@@ -82,7 +82,7 @@ server.put('/api/users/:id', (req, res) => {
         if(updated) {
             res.json(updated);
         } else {
-            res.status(500).json({
+            res.status(404).json({
                 err: err,
                 message: `Failed to update/find user with ID: ${id}`
             });
@@ -90,7 +90,7 @@ server.put('/api/users/:id', (req, res) => {
     })
     .catch((err) => {
         console.log(err);
-        res.status(404).json({
+        res.status(500).json({
             err: err,
             message: `Failed to update/find user with ID: ${id}`
         });
