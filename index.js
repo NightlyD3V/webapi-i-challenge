@@ -1,10 +1,26 @@
 // implement your API here
 const express = require('express');
+const db = require('./data/db');
 const server = express();
-const db = require('./data/db.js');
+server.use(express.json());
 
 //CRUD operations
 
+//Create new users 
+server.post('/api/users', (req, res)=> {
+    const newUser = req.body;
+    db.insert(newUser)
+        .then((user) => {
+            res.status(201).json(user);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+                err: err,
+                message: 'Failed to add new user'
+            })
+        })
+})
 //Get array of all users
 server.get('/api/users', (req, res) => {
     db.find()
@@ -15,6 +31,7 @@ server.get('/api/users', (req, res) => {
             console.log(err);
             res.status(500).json({
                 err: err,
+                message: 'failed to find users'
             })
         })
 })
